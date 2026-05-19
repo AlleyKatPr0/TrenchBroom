@@ -63,12 +63,12 @@ private:
   int findThemeIndex(const QString& theme) const;
 private slots:
   void layoutChanged(int index);
-  void link2dCamerasChanged(int state);
+  void link2dCamerasChanged(bool checked);
   void brightnessChanged(int value);
   void gridAlphaChanged(int value);
   void fovChanged(int value);
-  void showAxesChanged(int state);
-  void enableMsaaChanged(int state);
+  void showAxesChanged(bool checked);
+  void enableMsaaChanged(bool checked);
   void filterModeChanged(int index);
   void themeChanged(int index);
   void materialBrowserIconSizeChanged(int index);

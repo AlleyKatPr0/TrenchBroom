@@ -164,12 +164,12 @@ void MousePreferencePane::bindEvents()
     &MousePreferencePane::lookSpeedChanged);
   connect(
     m_invertLookHAxisCheckBox,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &MousePreferencePane::invertLookHAxisChanged);
   connect(
     m_invertLookVAxisCheckBox,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &MousePreferencePane::invertLookVAxisChanged);
 
@@ -180,12 +180,12 @@ void MousePreferencePane::bindEvents()
     &MousePreferencePane::panSpeedChanged);
   connect(
     m_invertPanHAxisCheckBox,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &MousePreferencePane::invertPanHAxisChanged);
   connect(
     m_invertPanVAxisCheckBox,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &MousePreferencePane::invertPanVAxisChanged);
 
@@ -196,22 +196,22 @@ void MousePreferencePane::bindEvents()
     &MousePreferencePane::moveSpeedChanged);
   connect(
     m_invertMouseWheelCheckBox,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &MousePreferencePane::invertMouseWheelChanged);
   connect(
     m_enableAltMoveCheckBox,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &MousePreferencePane::enableAltMoveChanged);
   connect(
     m_invertAltMoveAxisCheckBox,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &MousePreferencePane::invertAltMoveAxisChanged);
   connect(
     m_moveInCursorDirCheckBox,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &MousePreferencePane::moveInCursorDirChanged);
 
@@ -362,18 +362,16 @@ void MousePreferencePane::lookSpeedChanged(const int /* value */)
   prefs.set(Preferences::CameraLookSpeed, ratio);
 }
 
-void MousePreferencePane::invertLookHAxisChanged(const int state)
+void MousePreferencePane::invertLookHAxisChanged(const bool checked)
 {
-  const auto value = (state == Qt::Checked);
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::CameraLookInvertH, value);
+  prefs.set(Preferences::CameraLookInvertH, checked);
 }
 
-void MousePreferencePane::invertLookVAxisChanged(const int state)
+void MousePreferencePane::invertLookVAxisChanged(const bool checked)
 {
-  const auto value = (state == Qt::Checked);
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::CameraLookInvertV, value);
+  prefs.set(Preferences::CameraLookInvertV, checked);
 }
 
 void MousePreferencePane::panSpeedChanged(const int /* value */)
@@ -383,18 +381,16 @@ void MousePreferencePane::panSpeedChanged(const int /* value */)
   prefs.set(Preferences::CameraPanSpeed, ratio);
 }
 
-void MousePreferencePane::invertPanHAxisChanged(const int state)
+void MousePreferencePane::invertPanHAxisChanged(const bool checked)
 {
-  const auto value = (state == Qt::Checked);
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::CameraPanInvertH, value);
+  prefs.set(Preferences::CameraPanInvertH, checked);
 }
 
-void MousePreferencePane::invertPanVAxisChanged(const int state)
+void MousePreferencePane::invertPanVAxisChanged(const bool checked)
 {
-  const auto value = (state == Qt::Checked);
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::CameraPanInvertV, value);
+  prefs.set(Preferences::CameraPanInvertV, checked);
 }
 
 void MousePreferencePane::moveSpeedChanged(const int /* value */)
@@ -404,32 +400,28 @@ void MousePreferencePane::moveSpeedChanged(const int /* value */)
   prefs.set(Preferences::CameraMoveSpeed, ratio);
 }
 
-void MousePreferencePane::invertMouseWheelChanged(const int state)
+void MousePreferencePane::invertMouseWheelChanged(const bool checked)
 {
-  const auto value = (state == Qt::Checked);
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::CameraMouseWheelInvert, value);
+  prefs.set(Preferences::CameraMouseWheelInvert, checked);
 }
 
-void MousePreferencePane::enableAltMoveChanged(const int state)
+void MousePreferencePane::enableAltMoveChanged(const bool checked)
 {
-  const auto value = (state == Qt::Checked);
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::CameraEnableAltMove, value);
+  prefs.set(Preferences::CameraEnableAltMove, checked);
 }
 
-void MousePreferencePane::invertAltMoveAxisChanged(const int state)
+void MousePreferencePane::invertAltMoveAxisChanged(const bool checked)
 {
-  const auto value = (state == Qt::Checked);
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::CameraAltMoveInvert, value);
+  prefs.set(Preferences::CameraAltMoveInvert, checked);
 }
 
-void MousePreferencePane::moveInCursorDirChanged(const int state)
+void MousePreferencePane::moveInCursorDirChanged(const bool checked)
 {
-  const auto value = (state == Qt::Checked);
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::CameraMoveInCursorDir, value);
+  prefs.set(Preferences::CameraMoveInCursorDir, checked);
 }
 
 namespace

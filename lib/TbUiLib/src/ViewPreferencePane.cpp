@@ -229,7 +229,7 @@ void ViewPreferencePane::bindEvents()
     &ViewPreferencePane::layoutChanged);
   connect(
     m_link2dCameras,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &ViewPreferencePane::link2dCamerasChanged);
   connect(
@@ -246,12 +246,12 @@ void ViewPreferencePane::bindEvents()
     m_fovSlider, &SliderWithLabel::valueChanged, this, &ViewPreferencePane::fovChanged);
   connect(
     m_showAxes,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &ViewPreferencePane::showAxesChanged);
   connect(
     m_enableMsaa,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &ViewPreferencePane::enableMsaaChanged);
   connect(
@@ -392,11 +392,10 @@ void ViewPreferencePane::layoutChanged(const int index)
   prefs.set(Preferences::MapViewLayout, index);
 }
 
-void ViewPreferencePane::link2dCamerasChanged(const int state)
+void ViewPreferencePane::link2dCamerasChanged(const bool checked)
 {
-  const auto value = state == Qt::Checked;
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::Link2DCameras, value);
+  prefs.set(Preferences::Link2DCameras, checked);
 }
 
 void ViewPreferencePane::brightnessChanged(const int value)
@@ -418,18 +417,16 @@ void ViewPreferencePane::fovChanged(const int value)
   prefs.set(Preferences::CameraFov, float(value));
 }
 
-void ViewPreferencePane::showAxesChanged(const int state)
+void ViewPreferencePane::showAxesChanged(const bool checked)
 {
-  const auto value = state == Qt::Checked;
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::ShowAxes, value);
+  prefs.set(Preferences::ShowAxes, checked);
 }
 
-void ViewPreferencePane::enableMsaaChanged(const int state)
+void ViewPreferencePane::enableMsaaChanged(const bool checked)
 {
-  const auto value = state == Qt::Checked;
   auto& prefs = PreferenceManager::instance();
-  prefs.set(Preferences::EnableMSAA, value);
+  prefs.set(Preferences::EnableMSAA, checked);
 }
 
 void ViewPreferencePane::filterModeChanged(const int value)

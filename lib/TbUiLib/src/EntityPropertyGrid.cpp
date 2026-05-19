@@ -311,9 +311,9 @@ void EntityPropertyGrid::createGui()
   m_showDefaultPropertiesCheckBox = new QCheckBox{tr("Show default properties")};
   connect(
     m_showDefaultPropertiesCheckBox,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
-    [&](const int state) { m_model->setShowDefaultRows(state == Qt::Checked); });
+    [&](const bool checked) { m_model->setShowDefaultRows(checked); });
   m_showDefaultPropertiesCheckBox->setChecked(m_model->showDefaultRows());
 
   connect(m_table, &EntityPropertyTable::addRowShortcutTriggered, this, [&]() {

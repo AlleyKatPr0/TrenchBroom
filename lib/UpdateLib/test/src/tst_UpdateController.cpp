@@ -131,7 +131,7 @@ TEST_CASE("UpdateController")
     REQUIRE(stateChangedSpy.isValid());
 
     const auto spyState = [&]() {
-      return get<UpdateControllerState>(stateChangedSpy.last().first());
+      return stateChangedSpy.last().first().value<UpdateControllerState>();
     };
 
     SECTION("checkForUpdates")
