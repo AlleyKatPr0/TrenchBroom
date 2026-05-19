@@ -1610,6 +1610,85 @@ TEST_CASE("Brush")
           vm::approx(transform * p4),
         });
     }
+
+    SECTION("UV lock reference vertex selection is deterministic")
+    {
+      const auto worldBounds = vm::bbox3d{4096.0};
+
+      auto textureResource = gl::createTextureResource(gl::Texture{64, 64});
+      auto testMaterial = gl::Material{"testMaterial", std::move(textureResource)};
+
+      const auto bottom = std::vector<vm::vec3d>{
+        {+64, 0, 0},
+        {+20, +60, 0},
+        {-52, +38, 0},
+        {-52, -38, 0},
+        {+20, -60, 0},
+      };
+      const auto top =
+        bottom | std::views::transform([](const auto& p) { return p + vm::vec3d{0, 0, 64}; })
+        | kdl::ranges::to<std::vector>();
+
+      auto vertexPositions1 = kdl::vec_concat(bottom, top);
+      auto vertexPositions2 = vertexPositions1;
+      std::ranges::reverse(vertexPositions2);
+
+      auto builder = BrushBuilder{MapFormat::Valve, worldBounds};
+      auto brush1 = builder.createBrush(vertexPositions1, "") | kdl::value();
+      auto brush2 = builder.createBrush(vertexPositions2, "") | kdl::value();
+
+      for (auto& face : brush1.faces())
+      {
+        face.setMaterial(&testMaterial);
+      }
+      for (auto& face : brush2.faces())
+      {
+        face.setMaterial(&testMaterial);
+      }
+
+      const auto delta = vm::vec3d{+8, 0, 0};
+      const auto transform = vm::translation_matrix(delta);
+      const auto movingVertexPositions = std::vector<vm::vec3d>{top[0], top[1], top[2]};
+
+      REQUIRE(brush1.transformVertices(worldBounds, movingVertexPositions, transform, true));
+      REQUIRE(brush2.transformVertices(worldBounds, movingVertexPositions, transform, true));
+
+      const auto topFaceIndex1 = brush1.findFace(vm::vec3d{0, 0, 1});
+      const auto topFaceIndex2 = brush2.findFace(vm::vec3d{0, 0, 1});
+      REQUIRE(topFaceIndex1);
+      REQUIRE(topFaceIndex2);
+
+      const auto& topFace1 = brush1.face(*topFaceIndex1);
+      const auto& topFace2 = brush2.face(*topFaceIndex2);
+
+      auto expectedVertexPositions = top;
+      for (size_t i = 0; i < 3; ++i)
+      {
+        expectedVertexPositions[i] = expectedVertexPositions[i] + delta;
+      }
+      std::ranges::sort(expectedVertexPositions, [](const auto& a, const auto& b) {
+        if (a.x() != b.x())
+        {
+          return a.x() < b.x();
+        }
+        if (a.y() != b.y())
+        {
+          return a.y() < b.y();
+        }
+        return a.z() < b.z();
+      });
+
+      const auto uvs1 =
+        expectedVertexPositions
+        | std::views::transform([&](const auto& p) { return topFace1.uvCoords(p); })
+        | kdl::ranges::to<std::vector>();
+      const auto uvs2 =
+        expectedVertexPositions
+        | std::views::transform([&](const auto& p) { return topFace2.uvCoords(p); })
+        | kdl::ranges::to<std::vector>();
+
+      CHECK(uvListsEqual(uvs1, uvs2));
+    }
   }
 
   SECTION("removeVertices")
