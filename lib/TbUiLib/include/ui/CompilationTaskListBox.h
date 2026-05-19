@@ -95,7 +95,7 @@ private:
   mdl::CompilationExportMap& task();
 private slots:
   void targetSpecChanged(const QString& text);
-  void stripTbPropertiesChanged(int state);
+  void stripTbPropertiesChanged(bool checked);
 };
 
 class CompilationCopyFilesTaskEditor : public CompilationTaskEditorBase
@@ -184,7 +184,7 @@ private slots:
   void browseTool();
   void toolSpecChanged(const QString& text);
   void parameterSpecChanged(const QString& text);
-  void treatNonZeroResultCodeAsErrorChanged(int state);
+  void treatNonZeroResultCodeAsErrorChanged(bool checked);
 };
 
 class CompilationTaskListBox : public ControlListBox

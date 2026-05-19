@@ -162,7 +162,7 @@ Variables are allowed.)");
     &CompilationExportMapTaskEditor::targetSpecChanged);
   connect(
     m_stripTbProperties,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &CompilationExportMapTaskEditor::stripTbPropertiesChanged);
 }
@@ -196,10 +196,9 @@ void CompilationExportMapTaskEditor::targetSpecChanged(const QString& text)
   task().targetSpec = text.toStdString();
 }
 
-void CompilationExportMapTaskEditor::stripTbPropertiesChanged(const int state)
+void CompilationExportMapTaskEditor::stripTbPropertiesChanged(const bool checked)
 {
-  const auto value = (state == Qt::Checked);
-  task().stripTbProperties = value;
+  task().stripTbProperties = checked;
 }
 
 CompilationCopyFilesTaskEditor::CompilationCopyFilesTaskEditor(
@@ -501,7 +500,7 @@ Variables are allowed.)");
     &CompilationRunToolTaskEditor::parameterSpecChanged);
   connect(
     m_treatNonZeroResultCodeAsError,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
     &CompilationRunToolTaskEditor::treatNonZeroResultCodeAsErrorChanged);
 }
@@ -561,10 +560,9 @@ void CompilationRunToolTaskEditor::parameterSpecChanged(const QString& text)
   task().parameterSpec = text.toStdString();
 }
 
-void CompilationRunToolTaskEditor::treatNonZeroResultCodeAsErrorChanged(const int state)
+void CompilationRunToolTaskEditor::treatNonZeroResultCodeAsErrorChanged(const bool checked)
 {
-  const auto value = (state == Qt::Checked);
-  task().treatNonZeroResultCodeAsError = value;
+  task().treatNonZeroResultCodeAsError = checked;
 }
 
 // CompilationTaskListBox
