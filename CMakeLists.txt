@@ -18,6 +18,7 @@ endif()
 
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
 set(VCPKG_OVERLAY_PORTS "${CMAKE_SOURCE_DIR}/vcpkg-overlay-ports/freeimage;${CMAKE_SOURCE_DIR}/vcpkg-overlay-ports/openexr")
+set(VCPKG_OVERLAY_PORTS "${VCPKG_OVERLAY_PORTS};${CMAKE_SOURCE_DIR}/vcpkg-overlay-ports/polyclipping")
 
 set(CMAKE_C_VISIBILITY_PRESET hidden)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
@@ -81,7 +82,10 @@ if(NOT PANDOC_PATH)
   find_program(PANDOC_PATH NAMES "pandoc" DOC "Pandoc program location")
 
   if(PANDOC_PATH STREQUAL "PANDOC_PATH-NOTFOUND")
-    message(FATAL_ERROR "Could not find pandoc")
+    message(
+      WARNING
+        "Could not find pandoc; the manual will be generated as an empty placeholder."
+    )
   else()
     message(STATUS "Found Pandoc: ${PANDOC_PATH}")
   endif()
@@ -106,7 +110,7 @@ find_package(stduuid REQUIRED)
 
 # Find Qt and OpenGL
 find_package(OpenGL REQUIRED)
-find_package(Qt6 COMPONENTS Core Widgets OpenGL OpenGLWidgets Network Svg Test REQUIRED)
+find_package(Qt6 6.9.0 COMPONENTS Core Widgets OpenGL OpenGLWidgets Network Svg Test REQUIRED)
 
 # Find threads lib, needed to work around a gtest bug, see: https://stackoverflow.com/questions/21116622/undefined-reference-to-pthread-key-create-linker-error
 # The googletest target links to this

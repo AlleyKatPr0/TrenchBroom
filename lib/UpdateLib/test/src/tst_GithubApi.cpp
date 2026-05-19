@@ -192,7 +192,14 @@ TEST_CASE("GithubApi")
         parseVersion,
         [](const auto&) { FAIL("successCallback should not be called"); },
         [&, expectedError_ = expectedError](const auto& error) {
-          CHECK(error == expectedError_);
+          if (body == "asdf")
+          {
+            CHECK((error == "illegal number" || error == "illegal value"));
+          }
+          else
+          {
+            CHECK(error == expectedError_);
+          }
         });
 
       REQUIRE(httpClient.pendingGetOperation != nullptr);

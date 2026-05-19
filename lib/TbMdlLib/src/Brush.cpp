@@ -1015,6 +1015,34 @@ std::optional<vm::mat4x4d> Brush::findTransformForUVLock(
   BrushFaceGeometry* left,
   BrushFaceGeometry* right)
 {
+  const auto lexicographicLess = [](const vm::vec3d& lhs, const vm::vec3d& rhs) {
+    if (lhs.x() != rhs.x())
+    {
+      return lhs.x() < rhs.x();
+    }
+    if (lhs.y() != rhs.y())
+    {
+      return lhs.y() < rhs.y();
+    }
+    return lhs.z() < rhs.z();
+  };
+
+  const auto squaredDistanceToLine = [](const vm::vec3d& point,
+                                       const vm::vec3d& linePoint0,
+                                       const vm::vec3d& linePoint1) {
+    const auto lineDirection = linePoint1 - linePoint0;
+    const auto lineDirectionLength2 = vm::dot(lineDirection, lineDirection);
+    if (vm::is_zero(lineDirectionLength2, vm::constants<double>::almost_zero()))
+    {
+      const auto diff = point - linePoint0;
+      return vm::dot(diff, diff);
+    }
+
+    const auto diff = point - linePoint0;
+    const auto perp = vm::cross(diff, lineDirection);
+    return vm::dot(perp, perp) / lineDirectionLength2;
+  };
+
   std::vector<vm::vec3d> unmovedVerts;
   std::vector<std::pair<vm::vec3d, vm::vec3d>> movedVerts;
 
@@ -1048,11 +1076,80 @@ std::optional<vm::mat4x4d> Brush::findTransformForUVLock(
   {
     referenceVerts.emplace_back(unmovedVert, unmovedVert);
   }
-  // TODO: When there are multiple choices of moving verts (unmovedVerts.size() +
-  // movedVerts.size() > 3) we should sort them somehow. This can be seen if you select
-  // and move 3/5 verts of a pentagon; which of the 3 moving verts currently gets UV
-  // lock is arbitrary.
-  referenceVerts = kdl::vec_concat(std::move(referenceVerts), movedVerts);
+
+  // If there are multiple choices of moving verts (unmovedVerts.size() + movedVerts.size()
+  // > 3), pick a deterministic subset of moved verts based on their geometry.
+  const auto missingCount = referenceVerts.size() < 3u ? 3u - referenceVerts.size() : 0u;
+  if (missingCount > movedVerts.size())
+  {
+    // Can't create a transform as there are not enough verts
+    return std::nullopt;
+  }
+
+  auto chosenMovedVerts = std::vector<std::pair<vm::vec3d, vm::vec3d>>{};
+  chosenMovedVerts.reserve(missingCount);
+
+  auto remainingMovedVerts = movedVerts;
+  const auto chooseMovedVertex = [&](auto predicate) {
+    auto bestIt = remainingMovedVerts.end();
+    auto bestScore = 0.0;
+
+    for (auto it = remainingMovedVerts.begin(); it != remainingMovedVerts.end(); ++it)
+    {
+      const auto score = predicate(it->first);
+      if (
+        bestIt == remainingMovedVerts.end() || score > bestScore
+        || (score == bestScore && lexicographicLess(it->first, bestIt->first)))
+      {
+        bestIt = it;
+        bestScore = score;
+      }
+    }
+
+    if (bestIt == remainingMovedVerts.end())
+    {
+      return;
+    }
+
+    chosenMovedVerts.push_back(*bestIt);
+    remainingMovedVerts.erase(bestIt);
+  };
+
+  if (missingCount == 1u)
+  {
+    contract_assert(referenceVerts.size() == 2u);
+    const auto a = referenceVerts[0].first;
+    const auto b = referenceVerts[1].first;
+    chooseMovedVertex([&](const auto& p) { return squaredDistanceToLine(p, a, b); });
+  }
+  else if (missingCount == 2u)
+  {
+    contract_assert(referenceVerts.size() == 1u);
+    const auto a = referenceVerts[0].first;
+    chooseMovedVertex([&](const auto& p) {
+      const auto diff = p - a;
+      return vm::dot(diff, diff);
+    });
+    contract_assert(!chosenMovedVerts.empty());
+    const auto b = chosenMovedVerts[0].first;
+    chooseMovedVertex([&](const auto& p) { return squaredDistanceToLine(p, a, b); });
+  }
+  else if (missingCount == 3u)
+  {
+    // No unmoved vertices. Choose three moved vertices that form a stable triangle.
+    chooseMovedVertex([](const auto&) { return 0.0; });
+    contract_assert(!chosenMovedVerts.empty());
+    const auto a = chosenMovedVerts[0].first;
+    chooseMovedVertex([&](const auto& p) {
+      const auto diff = p - a;
+      return vm::dot(diff, diff);
+    });
+    contract_assert(chosenMovedVerts.size() == 2u);
+    const auto b = chosenMovedVerts[1].first;
+    chooseMovedVertex([&](const auto& p) { return squaredDistanceToLine(p, a, b); });
+  }
+
+  referenceVerts = kdl::vec_concat(std::move(referenceVerts), chosenMovedVerts);
 
   if (referenceVerts.size() < 3)
   {

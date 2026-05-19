@@ -21,8 +21,11 @@
 
 #include <QDir>                      // IWYU pragma: keep
 #include <QFileInfo>                 // IWYU pragma: keep
-#include <QNtfsPermissionCheckGuard> // IWYU pragma: keep
 #include <QProcess>
+
+#if defined(_WIN32)
+#include <QNtfsPermissionCheckGuard> // IWYU pragma: keep
+#endif
 
 #include "Macros.h" // IWYU pragma: keep
 #include "PreferenceManager.h"

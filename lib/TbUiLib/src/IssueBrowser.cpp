@@ -53,9 +53,9 @@ QWidget* IssueBrowser::createTabBarPage(QWidget* parent)
   m_showHiddenIssuesCheckBox = new QCheckBox{"Show hidden issues"};
   connect(
     m_showHiddenIssuesCheckBox,
-    &QCheckBox::checkStateChanged,
+    &QCheckBox::toggled,
     this,
-    &IssueBrowser::showHiddenIssuesChanged);
+    [this](const bool /* checked */) { showHiddenIssuesChanged(); });
 
   m_filterEditor = new FlagsPopupEditor{1, "Filter", false};
   connect(

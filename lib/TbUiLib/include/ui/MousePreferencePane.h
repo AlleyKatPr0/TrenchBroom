@@ -74,18 +74,18 @@ private:
   bool validate() override;
 private slots:
   void lookSpeedChanged(int value);
-  void invertLookHAxisChanged(int state);
-  void invertLookVAxisChanged(int state);
+  void invertLookHAxisChanged(bool checked);
+  void invertLookVAxisChanged(bool checked);
 
   void panSpeedChanged(int value);
-  void invertPanHAxisChanged(int state);
-  void invertPanVAxisChanged(int state);
+  void invertPanHAxisChanged(bool checked);
+  void invertPanVAxisChanged(bool checked);
 
   void moveSpeedChanged(int value);
-  void invertMouseWheelChanged(int state);
-  void enableAltMoveChanged(int state);
-  void invertAltMoveAxisChanged(int state);
-  void moveInCursorDirChanged(int state);
+  void invertMouseWheelChanged(bool checked);
+  void enableAltMoveChanged(bool checked);
+  void invertAltMoveAxisChanged(bool checked);
+  void moveInCursorDirChanged(bool checked);
 
   void forwardKeyChanged();
   void backwardKeyChanged();

@@ -20,22 +20,35 @@ fix_win32_path(PANDOC_TEMPLATE_PATH)
 fix_win32_path(PANDOC_INPUT_PATH)
 fix_win32_path(PANDOC_OUTPUT_PATH)
 
-# Generate manual
-# 1. Create target directory
-# 2. Run pandoc to create a temporary HTML file
-# 3. Run AddVersionToManual.cmake on the temporary HTML file
-# 4. Run TransformKeyboardShortcuts.cmake on the temporary HTML file
-# 5. Copy the temporary HTML file to its target
-# 6. Remove the temporary HTML file
-add_custom_command(OUTPUT "${INDEX_OUTPUT_PATH}"
-    COMMAND ${CMAKE_COMMAND} -E make_directory "${DOC_MANUAL_TARGET_DIR}"
-    COMMAND ${PANDOC_PATH} --standalone --toc --toc-depth=2 --template "${PANDOC_TEMPLATE_PATH}" --from=markdown --to=html5 -o "${PANDOC_OUTPUT_PATH}" "${PANDOC_INPUT_PATH}"
-    COMMAND ${CMAKE_COMMAND} -DINPUT="${PANDOC_OUTPUT_PATH}" -DOUTPUT="${PANDOC_OUTPUT_PATH}" -P "${CMAKE_CURRENT_BINARY_DIR}/AddVersionToManual.cmake"
-    COMMAND ${CMAKE_COMMAND} -DINPUT="${PANDOC_OUTPUT_PATH}" -DOUTPUT="${PANDOC_OUTPUT_PATH}" -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/TransformKeyboardShortcuts.cmake"
-    COMMAND ${CMAKE_COMMAND} -E copy "${PANDOC_OUTPUT_PATH}" "${INDEX_OUTPUT_PATH}"
-    COMMAND ${CMAKE_COMMAND} -E remove "${PANDOC_OUTPUT_PATH}"
-    DEPENDS "${PANDOC_TEMPLATE_PATH}" "${PANDOC_INPUT_PATH}" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/TransformKeyboardShortcuts.cmake" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/AddVersionToManual.cmake.in"
-)
+if(PANDOC_PATH AND NOT PANDOC_PATH STREQUAL "PANDOC_PATH-NOTFOUND")
+    # Generate manual
+    # 1. Create target directory
+    # 2. Run pandoc to create a temporary HTML file
+    # 3. Run AddVersionToManual.cmake on the temporary HTML file
+    # 4. Run TransformKeyboardShortcuts.cmake on the temporary HTML file
+    # 5. Copy the temporary HTML file to its target
+    # 6. Remove the temporary HTML file
+    add_custom_command(OUTPUT "${INDEX_OUTPUT_PATH}"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${DOC_MANUAL_TARGET_DIR}"
+        COMMAND ${PANDOC_PATH} --standalone --toc --toc-depth=2 --template "${PANDOC_TEMPLATE_PATH}" --from=markdown --to=html5 -o "${PANDOC_OUTPUT_PATH}" "${PANDOC_INPUT_PATH}"
+        COMMAND ${CMAKE_COMMAND} -DINPUT="${PANDOC_OUTPUT_PATH}" -DOUTPUT="${PANDOC_OUTPUT_PATH}" -P "${CMAKE_CURRENT_BINARY_DIR}/AddVersionToManual.cmake"
+        COMMAND ${CMAKE_COMMAND} -DINPUT="${PANDOC_OUTPUT_PATH}" -DOUTPUT="${PANDOC_OUTPUT_PATH}" -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/TransformKeyboardShortcuts.cmake"
+        COMMAND ${CMAKE_COMMAND} -E copy "${PANDOC_OUTPUT_PATH}" "${INDEX_OUTPUT_PATH}"
+        COMMAND ${CMAKE_COMMAND} -E remove "${PANDOC_OUTPUT_PATH}"
+        DEPENDS "${PANDOC_TEMPLATE_PATH}" "${PANDOC_INPUT_PATH}" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/TransformKeyboardShortcuts.cmake" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/AddVersionToManual.cmake.in"
+    )
+else()
+    message(
+        WARNING
+            "Pandoc not found; generating an empty placeholder manual at ${INDEX_OUTPUT_PATH}"
+    )
+
+    add_custom_command(OUTPUT "${INDEX_OUTPUT_PATH}"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${DOC_MANUAL_TARGET_DIR}"
+        COMMAND ${CMAKE_COMMAND} -E touch "${INDEX_OUTPUT_PATH}"
+        DEPENDS "${PANDOC_TEMPLATE_PATH}" "${PANDOC_INPUT_PATH}"
+    )
+endif()
 
 # Dump the keyboard shortcuts
 set(DOC_MANUAL_SHORTCUTS_JS_TARGET_ABSOLUTE "${DOC_MANUAL_TARGET_DIR}/shortcuts.js")
