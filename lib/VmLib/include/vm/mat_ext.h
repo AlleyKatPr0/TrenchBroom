@@ -759,7 +759,7 @@ constexpr mat<T, 4, 4> shear_matrix(
   return mat<T, 4, 4>(1, Syx, Szx, 0, Sxy, 1, Szy, 0, Sxz, Syz, 1, 0, 0, 0, 0, 1);
 }
 
-// TODO: add documentation and tests
+// Pending: add documentation and tests
 template <typename T>
 constexpr mat<T, 4, 4> scale_bbox_matrix(
   const bbox<T, 3>& oldBBox, const bbox<T, 3>& newBBox)
@@ -769,7 +769,7 @@ constexpr mat<T, 4, 4> scale_bbox_matrix(
          * translation_matrix(-oldBBox.min);
 }
 
-// TODO: add documentation and tests
+// Pending: add documentation and tests
 template <typename T>
 constexpr mat<T, 4, 4> scale_bbox_matrix_with_anchor(
   const bbox<T, 3>& oldBBox, const vec<T, 3>& newSize, const vec<T, 3>& anchorPoint)
@@ -779,7 +779,7 @@ constexpr mat<T, 4, 4> scale_bbox_matrix_with_anchor(
          * translation_matrix(-anchorPoint);
 }
 
-// TODO: add documentation and tests
+// Pending: add documentation and tests
 template <typename T>
 constexpr mat<T, 4, 4> shear_bbox_matrix(
   const bbox<T, 3>& box, const vec<T, 3>& sideToShear, const vec<T, 3>& delta)

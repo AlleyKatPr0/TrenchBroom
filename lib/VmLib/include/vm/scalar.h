@@ -872,7 +872,7 @@ template <typename T>
 T nextgreater(const T value)
 {
   static_assert(std::is_floating_point_v<T>, "T must be a floating point type");
-  // TODO: does MSC not implement cmath correctly?
+  // Pending: does MSC not implement cmath correctly?
 #ifdef _MSC_VER
   return _nextafter(value, std::numeric_limits<T>::infinity());
 #else

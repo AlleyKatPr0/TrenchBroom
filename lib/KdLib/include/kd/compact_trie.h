@@ -313,7 +313,7 @@ private:
       /*
        Possible cases for insertion:
         index: 01234567 |   | #m_key: 6
-        m_key: target   | ^ | #key | conditions              | todo
+        m_key: target   | ^ | #key | conditions              | pending
        =================|===|======|=========================|======
         case:  key:     |   |      |                         |
            0:  blah     | 0 | 4    | ^ = 0                   | this is the root node, find or create child 'blah' and insert there; 

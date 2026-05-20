@@ -207,7 +207,7 @@ public:
     return polygon<T, S>(mat * vertices());
   }
 
-  // FIXME: this is only here because TB's VertexToolBase needs it, it should be moved
+  // Known issue: this is only here because TB's VertexToolBase needs it, it should be moved
   // elsewhere
   /**
    * Adds the vertices of the given range of polygons to the given output iterator.

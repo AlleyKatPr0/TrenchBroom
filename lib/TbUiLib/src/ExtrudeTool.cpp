@@ -334,7 +334,7 @@ void ExtrudeTool::updateProposedDragHandles(const mdl::PickResult& pickResult)
   auto& map = m_document.map();
   if (m_dragging)
   {
-    // FIXME: this should be turned into an ensure failure, but it's easy to make it
+    // Known issue: this should be turned into an ensure failure, but it's easy to make it
     // fail currently by spamming drags/modifiers. Indicates a bug in
     // ExtrudeToolController thinking we are not dragging when we actually still are.
     map.logger().error() << "updateProposedDragHandles called during a drag";
@@ -548,13 +548,13 @@ bool splitBrushesInward(
   dragState.currentDragFaces.clear();
   map.rollbackTransaction();
 
-  // FIXME: deal with linked group update failure (needed for #3647)
+  // Known issue: deal with linked group update failure (needed for #3647)
   const bool success = updateNodeContents(map, "Resize Brushes", nodesToUpdate);
   unused(success);
 
   // Add the newly split off brushes and select them (keeping the original brushes
   // selected).
-  // FIXME: deal with linked group update failure (needed for #3647)
+  // Known issue: deal with linked group update failure (needed for #3647)
   const auto addedNodes = addNodes(map, newNodes);
   selectNodes(map, addedNodes);
 

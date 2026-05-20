@@ -383,7 +383,7 @@ QPointF InputEventRecorder::scrollLinesForEvent(const QWheelEvent& qtEvent)
   // see: https://doc.qt.io/qt-5/qwheelevent.html#angleDelta
   constexpr auto EighthsOfDegreesPerStep = 120.0f;
 
-  // TODO: support pixel scrolling via qtEvent.pixelDelta()?
+  // Pending: support pixel scrolling via qtEvent.pixelDelta()?
   const auto linesPerStep = QApplication::wheelScrollLines();
   const auto angleDelta = QPointF{qtEvent.angleDelta()}; // in eighths-of-degrees
 

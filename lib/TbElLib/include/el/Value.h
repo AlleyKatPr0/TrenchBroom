@@ -21,7 +21,7 @@
 
 #include "Types.h"
 
-// FIXME: try to remove some of these headers
+// Known issue: try to remove some of these headers
 #include <iosfwd>
 #include <memory>
 #include <optional>

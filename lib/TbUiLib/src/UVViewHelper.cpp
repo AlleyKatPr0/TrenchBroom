@@ -169,14 +169,14 @@ void UVViewHelper::pickUVGrid(
 
       };
 
-      // FIXME: should be measured in points so the grid isn't harder to hit with high-DPI
+      // Known issue: should be measured in points so the grid isn't harder to hit with high-DPI
       const float distToClosestGridInViewCoords[2] = {
         vm::distance(
           hitPointInViewCoords, uvToViewCoords(closestPointsOnGridInUVCoords[0])),
         vm::distance(
           hitPointInViewCoords, uvToViewCoords(closestPointsOnGridInUVCoords[1]))};
 
-      // FIXME: factor out and share with other tools
+      // Known issue: factor out and share with other tools
       constexpr auto maxDistance = 5.0f;
 
       for (size_t i = 0; i < 2; ++i)

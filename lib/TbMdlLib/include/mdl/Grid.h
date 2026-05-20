@@ -34,7 +34,7 @@
 #include <array>
 #include <optional>
 
-// FIXME: should this be moved to Model?
+// Known issue: should this be moved to Model?
 namespace tb::mdl
 {
 class BrushFace;

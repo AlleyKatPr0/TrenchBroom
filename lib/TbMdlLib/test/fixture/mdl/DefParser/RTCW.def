@@ -130,7 +130,7 @@ Triggered only by the player touching it
 /*QUAKED item_clipboard (1 1 0) (-8 -8 -8) (8 8 8) SUSPENDED SPIN PERSISTANT
 "model" - model to display in the world.  defaults to 'models/powerups/clipboard/clipboard.md3' (the clipboard laying flat is 'clipboard2.md3')
 "popup" - menu to popup.  no default since you won't want the same clipboard laying around. (clipboard will display a 'put popup here' message)
-"notebookpage" - when clipboard is picked up, this page (menu) will be added to your notebook (FIXME: TODO: more info goes here)
+"notebookpage" - when clipboard is picked up, this page (menu) will be added to your notebook (Known issue: Pending: more info goes here)
 
 We currently use:
 clip_interrogation
@@ -1933,7 +1933,7 @@ Only in CTF games.  Blue players spawn here at game start.
 /*QUAKED team_CTF_redspawn (1 0 0) (-16 -16 -24) (16 16 32) invulnerable startactive
 potential spawning position for axis team in wolfdm games.  
 
-TODO: SelectRandomTeamSpawnPoint() will choose team_CTF_redspawn point that:
+Pending: SelectRandomTeamSpawnPoint() will choose team_CTF_redspawn point that:
 
 1) has been activated (FL_SPAWNPOINT_ACTIVE)
 2) isn't occupied and
@@ -1948,7 +1948,7 @@ If target is set, point spawnpoint toward target activation
 /*QUAKED team_CTF_bluespawn (0 0 1) (-16 -16 -24) (16 16 32) invulnerable startactive
 potential spawning position for allied team in wolfdm games.  
 
-TODO: SelectRandomTeamSpawnPoint() will choose team_CTF_bluespawn point that:
+Pending: SelectRandomTeamSpawnPoint() will choose team_CTF_bluespawn point that:
 
 1) has been activated (active)
 2) isn't occupied and

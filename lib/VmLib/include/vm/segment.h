@@ -191,7 +191,7 @@ public:
    */
   vec<T, S> direction() const { return normalize(m_end - m_start); }
 
-  // FIXME: this is only here because TB's VertexToolBase needs it, it should be moved
+  // Known issue: this is only here because TB's VertexToolBase needs it, it should be moved
   // elsewhere
   /**
    * Adds the start and end points of the given range of segments to the given output

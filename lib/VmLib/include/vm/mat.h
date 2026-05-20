@@ -846,7 +846,7 @@ struct matrix_determinant
   }
 };
 
-// TODO: implement faster block-matrix based method for NxN matrices where N = 2^n
+// Pending: implement faster block-matrix based method for NxN matrices where N = 2^n
 /**
  * Partial specialization to optimize for the case of a 3x3 matrix.
  *

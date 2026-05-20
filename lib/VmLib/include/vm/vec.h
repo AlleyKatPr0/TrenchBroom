@@ -352,7 +352,7 @@ public:
     return result;
   }
 
-  // FIXME: this is only here because TB's VertexToolBase needs it, it should be moved
+  // Known issue: this is only here because TB's VertexToolBase needs it, it should be moved
   // elsewhere
   /**
    * Adds the given range of vertices to the given output iterator.

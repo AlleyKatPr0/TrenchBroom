@@ -241,7 +241,7 @@ MapWindow::~MapWindow()
   m_document->triggerAutosave();
   m_document.reset();
 
-  // FIXME: m_contextManager is deleted via smart pointer; it may release openGL resources
+  // Known issue: m_contextManager is deleted via smart pointer; it may release openGL resources
   // in its destructor
 }
 
@@ -830,7 +830,7 @@ void MapWindow::mapModificationStateDidChange()
 void MapWindow::transactionDone(const std::string&, const bool, const bool)
 {
   QTimer::singleShot(0, this, [this]() {
-    // FIXME: Delaying this with QTimer::singleShot is a hack to work around the lack of
+    // Known issue: Delaying this with QTimer::singleShot is a hack to work around the lack of
     // a notification that's called _after_ the CommandProcessor undo/redo stacks are
     // modified.
     //
@@ -844,7 +844,7 @@ void MapWindow::transactionDone(const std::string&, const bool, const bool)
 void MapWindow::transactionUndone(const std::string&, const bool, const bool)
 {
   QTimer::singleShot(0, this, [this]() {
-    // FIXME: see MapWindow::transactionDone
+    // Known issue: see MapWindow::transactionDone
     updateUndoRedoActions();
   });
 }

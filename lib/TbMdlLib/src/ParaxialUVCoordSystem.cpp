@@ -674,7 +674,7 @@ void ParaxialUVCoordSystem::transform(
       radV *= -1.0f;
     }
 
-    // TODO: be smarter about choosing between the X and Y axis rotations - sometimes
+    // Pending: be smarter about choosing between the X and Y axis rotations - sometimes
     // either one can be better
     auto rad = preferU ? radU : radV;
 

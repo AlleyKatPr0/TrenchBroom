@@ -89,7 +89,7 @@ void ControlListBoxItemRenderer::setSelected(
   setPalette(backgroundPalette);
   // macOS: we'd prefer setPalette(listWidget->palette()); but this doesn't work, whereas
   // the above does.
-  // FIXME: the above setPalette call should be removed once we stop using QListWidget and
+  // Known issue: the above setPalette call should be removed once we stop using QListWidget and
   // make ControlListBox a standalone widget.
 
   setBackgroundRole(selected ? QPalette::Highlight : QPalette::Base);
@@ -139,7 +139,7 @@ void ControlListBoxItemRenderer::setSelected(
     child->setPalette(labelPalette);
     // macOS: we'd prefer child->setPalette(listWidget->palette()); but this doesn't work,
     // whereas the above does.
-    // FIXME: the above setPalette call should be removed once we stop using QListWidget
+    // Known issue: the above setPalette call should be removed once we stop using QListWidget
     // and make ControlListBox a standalone widget.
   }
 }
@@ -369,7 +369,7 @@ void ControlListBox::listItemSelectionChanged()
   {
     auto* listItem = m_listWidget->item(row);
     auto* renderer = this->renderer(row);
-    // FIXME: this uses QListWidgetItem::isSelected() but addItemRenderer() is doing
+    // Known issue: this uses QListWidgetItem::isSelected() but addItemRenderer() is doing
     // it based on QListWidget::currentItem() - should be consistent.
     // (see: https://github.com/TrenchBroom/TrenchBroom/issues/3104)
     renderer->setSelected(listItem->isSelected(), m_listWidget);

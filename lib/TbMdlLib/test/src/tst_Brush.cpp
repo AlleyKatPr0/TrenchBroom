@@ -2342,7 +2342,7 @@ TEST_CASE("Brush")
             || normal == vm::vec3d{0, -1, 0})
           {
             CHECK_FALSE(uvListsEqual(oldUVCoords, newUVCoords));
-            // TODO: actually check the UV's
+            // Pending: actually check the UV's
           }
           else
           {

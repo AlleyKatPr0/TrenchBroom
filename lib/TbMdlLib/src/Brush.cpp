@@ -350,7 +350,7 @@ void Brush::cloneInvertedFaceAttributesFrom(const Brush& brush)
     if (const auto sourceIndex = brush.findFace(destination.boundary().flip()))
     {
       const auto& source = brush.face(*sourceIndex);
-      // Todo: invert the face attributes?
+      // Pending: invert the face attributes?
       destination.setAttributes(source.attributes());
 
       auto snapshot = source.takeUVCoordSystemSnapshot();

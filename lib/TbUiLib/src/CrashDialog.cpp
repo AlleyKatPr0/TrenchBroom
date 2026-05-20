@@ -103,7 +103,7 @@ void CrashDialog::createGui(
 
   setLayout(outerLayout);
 
-  // TODO: needs spacing tweaks
+  // Pending: needs spacing tweaks
 }
 
 } // namespace tb::ui

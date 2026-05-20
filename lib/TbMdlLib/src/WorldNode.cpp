@@ -251,7 +251,7 @@ void WorldNode::invalidateAllIssues()
 
 const vm::bbox3d& WorldNode::doGetLogicalBounds() const
 {
-  // TODO: this should probably return the world bounds, as it does in
+  // Pending: this should probably return the world bounds, as it does in
   // Layer::doGetLogicalBounds
   static const vm::bbox3d bounds;
   return bounds;

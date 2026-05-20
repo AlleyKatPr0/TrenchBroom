@@ -237,7 +237,7 @@ void EntityPropertyGrid::createGui()
   m_model = new EntityPropertyModel{m_document, this};
 
   // ensure the table takes ownership of the model in setModel
-  // FIXME: why? this looks unnecessary
+  // Known issue: why? this looks unnecessary
   m_model->setParent(m_table);
 
   m_proxyModel = new EntitySortFilterProxyModel{this};

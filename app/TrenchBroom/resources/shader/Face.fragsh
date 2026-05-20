@@ -55,7 +55,7 @@ void main()
   }
 
   // Assume alpha masked or opaque.
-  // TODO: Make this optional if we gain support for translucent textures
+  // Pending: Make this optional if we gain support for translucent textures
   if (EnableMasked && gl_FragColor.a < 0.5)
   {
     discard;
@@ -82,7 +82,7 @@ void main()
   if (ShadeFaces)
   {
     // angular dimming ( can be controlled with dimStrength )
-    // TODO: make view option
+    // Pending: make view option
     float dimStrength = 0.25;
     float angleDim = dot(normalize(viewVector), normalize(modelNormal)) * dimStrength
                      + (1.0 - dimStrength);
@@ -94,7 +94,7 @@ void main()
   {
     float distance = length(viewVector);
 
-    // TODO: make view options
+    // Pending: make view options
     vec3 fogColor = vec3(0.5, 0.5, 0.5);
     float maxFogAmount = 0.15;
     float fogBias = 0.0;

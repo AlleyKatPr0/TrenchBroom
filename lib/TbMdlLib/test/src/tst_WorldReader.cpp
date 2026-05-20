@@ -1179,7 +1179,7 @@ TEST_CASE("WorldReader")
     REQUIRE(worldResult);
 
     const auto& world = worldResult.value();
-    // TODO 2427: Assert one brush!
+    // Pending 2427: Assert one brush!
     CHECK(world->defaultLayer()->childCount() == 0u);
   }
 
@@ -1216,7 +1216,7 @@ brushDef
     REQUIRE(worldResult);
 
     const auto& world = worldResult.value();
-    // TODO 2427: Assert two brushes!
+    // Pending 2427: Assert two brushes!
     CHECK(world->defaultLayer()->childCount() == 1u);
   }
 

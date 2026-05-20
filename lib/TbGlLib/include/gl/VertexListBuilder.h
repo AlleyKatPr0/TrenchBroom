@@ -31,7 +31,7 @@ template <typename VertexSpec>
 class VertexListBuilder
 {
 public:
-  // FIXME: move out or make private
+  // Known issue: move out or make private
   struct Range
   {
     size_t index;

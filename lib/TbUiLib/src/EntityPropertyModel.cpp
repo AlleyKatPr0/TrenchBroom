@@ -1123,7 +1123,7 @@ bool EntityPropertyModel::renameProperty(
     if (!rowToOverwrite.valueMutable)
     {
       // Prevent changing an immutable value via a rename
-      // TODO: would this be better checked inside MapDocument::renameProperty?
+      // Pending: would this be better checked inside MapDocument::renameProperty?
       return false;
     }
 

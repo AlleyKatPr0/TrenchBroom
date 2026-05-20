@@ -231,7 +231,7 @@ Result<void> StandardMapParser::parseBrushFaces(ParserStatus& status)
     while (m_tokenizer.peekToken(QuakeMapToken::OParenthesis | QuakeMapToken::Eof)
              .hasType(QuakeMapToken::OParenthesis))
     {
-      // TODO 2427: detect the face type when parsing Quake3 map faces!
+      // Pending 2427: detect the face type when parsing Quake3 map faces!
       parseFace(status, false);
     }
 
@@ -398,7 +398,7 @@ void StandardMapParser::parseBrush(
     switch (token.type())
     {
     case QuakeMapToken::OParenthesis:
-      // TODO 2427: handle brush primitives
+      // Pending 2427: handle brush primitives
       if (!beginBrushCalled && !primitive)
       {
         onBeginBrush(startLocation, status);
@@ -407,7 +407,7 @@ void StandardMapParser::parseBrush(
       parseFace(status, primitive);
       break;
     case QuakeMapToken::CBrace:
-      // TODO 2427: handle brush primitives
+      // Pending 2427: handle brush primitives
       if (!primitive)
       {
         if (!beginBrushCalled)
@@ -639,7 +639,7 @@ void StandardMapParser::parsePrimitiveFace(ParserStatus& status)
 
   const auto materialName = parseMaterialName(status);
 
-  // TODO 2427: what to set for offset, rotation, scale?!
+  // Pending 2427: what to set for offset, rotation, scale?!
   auto attribs = BrushFaceAttributes{materialName};
 
   // Quake 2 extra info is optional
@@ -651,7 +651,7 @@ void StandardMapParser::parsePrimitiveFace(ParserStatus& status)
     attribs.setSurfaceValue(parseFloat());
   }
 
-  // TODO 2427: create a brush face
+  // Pending 2427: create a brush face
   // brushFace(line, p1, p2, p3, attribs, uAxis, vAxis, status);
 }
 

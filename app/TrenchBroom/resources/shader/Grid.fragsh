@@ -40,11 +40,11 @@ float getSoftStripes(float value, float gridSize, float stripeSize)
 /**
  * Draws two overlaid grids
  *
- * @param inCoords fragment coordinates (TODO: document units)
+ * @param inCoords fragment coordinates (Pending: document units)
  * @param gridRatio the reciprocal of the first grid size, e.g. (1/16) for a 16 unit grid
  * @param gridRatio2 the reciprocal of the second grid size, e.g. (1/16) for a 16 unit
  * grid
- * @param lineWidth the line width (TODO: document units)
+ * @param lineWidth the line width (Pending: document units)
  * @param gridBlend the fraction of the two grids to draw, between 0 and 1,
  *                  where 0.0 means 100% of grid one, and 1.0 means 100% of grid two.
  */

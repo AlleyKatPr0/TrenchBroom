@@ -34,7 +34,7 @@ void main()
   vec4 texel = texture2D(Material, gl_TexCoord[0].st);
 
   // Assume alpha masked or opaque.
-  // TODO: Make this optional if we gain support for translucent textures
+  // Pending: Make this optional if we gain support for translucent textures
   if (texel.a < 0.5)
   {
     discard;

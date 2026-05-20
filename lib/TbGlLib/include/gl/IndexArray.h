@@ -108,7 +108,7 @@ private:
 
     ~Holder() override
     {
-      // TODO: Revisit this revisiting OpenGL resource management. We should not store the
+      // Pending: Revisit this revisiting OpenGL resource management. We should not store the
       // VboManager, since it represents a safe time to delete the OpenGL buffer
       // object.
       if (m_vbo)

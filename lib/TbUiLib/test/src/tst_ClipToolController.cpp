@@ -147,7 +147,7 @@ TEST_CASE("ClipToolController")
   tool.performClip();
 
   // Check the clip result
-  // TODO: would be better to check the clip plane but it's not public
+  // Pending: would be better to check the clip plane but it's not public
   const auto& objects = map.worldNode().defaultLayer()->children();
   REQUIRE(objects.size() == 1u);
 

@@ -281,7 +281,7 @@ std::unique_ptr<NodeSerializer> MapFileSerializer::create(
   case MapFormat::Standard:
     return std::make_unique<QuakeFileSerializer>(stream);
   case MapFormat::Quake2:
-    // TODO 2427: Implement Quake3 serializers and use them
+    // Pending 2427: Implement Quake3 serializers and use them
   case MapFormat::Quake3:
   case MapFormat::Quake3_Legacy:
     return std::make_unique<Quake2FileSerializer>(stream);

@@ -172,7 +172,7 @@ mdl::Hit RotateHandle::Handle2D::pickRotateHandle(
   // Work around imprecision caused by 2D cameras being positioned at map bounds
   // by placing the ray origin on the same plane as the handle itself.
   // Fixes erratic handle selection behaviour at high zoom
-  // TODO: This should be removed once we replace the numerically unstable torus
+  // Pending: This should be removed once we replace the numerically unstable torus
   // intersection code
   auto ray = pickRay;
   switch (area)

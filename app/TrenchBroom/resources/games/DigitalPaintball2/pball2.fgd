@@ -764,7 +764,7 @@ Note: Inverse and inverse-square falloff require much higher brightness values t
     speed(integer) : "sets the movement speed (100 default)."
 ]
 
-// TODO - should this have sounds/lip/etc from base(Door)?
+// Pending - should this have sounds/lip/etc from base(Door)?
 @SolidClass base(AppearFlags) = func_door_secret : "A secret door. Slide back and then to the side."
 [
 	spawnflags(Flags) =

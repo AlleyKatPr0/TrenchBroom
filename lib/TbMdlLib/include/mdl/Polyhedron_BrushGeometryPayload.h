@@ -31,7 +31,7 @@ class BrushFace;
 
 struct BrushVertexPayload
 {
-  using Type = uint32_t; // FIXME: GLuint
+  using Type = uint32_t; // Known issue: GLuint
   static Type defaultValue() { return std::numeric_limits<Type>::max(); }
 };
 

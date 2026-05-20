@@ -125,7 +125,7 @@ vm::vec2f snapDelta(const UVViewHelper& helper, const vm::vec2f& delta)
     vm::vec2f{f2tTransform * vm::vec3d{newOriginInFaceCoords}};
 
   // now snap to the vertices
-  // TODO: this actually doesn't work because we're snapping to the X or Y coordinate of
+  // Pending: this actually doesn't work because we're snapping to the X or Y coordinate of
   // the vertices instead, we must snap to the edges!
   auto distanceInUVCoords = vm::vec2f::max();
   for (const auto* vertex : helper.face()->vertices())

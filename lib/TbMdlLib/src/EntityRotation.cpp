@@ -198,7 +198,7 @@ EntityRotationInfo entityRotationInfo(const Entity& entity)
         const auto offset = entity.definitionBounds().center();
         if (!vm::is_zero(offset.xy(), vm::Cd::almost_zero()))
         {
-          // TODO: this only makes sense for Quake
+          // Pending: this only makes sense for Quake
           usage = EntityRotationUsage::BlockRotation;
         }
 

@@ -100,7 +100,7 @@ typename Polyhedron<T, FP, VP>::ClipResult Polyhedron<T, FP, VP>::clip(
     contract_assert(newFace != nullptr);
 
     // Remove any redundant vertices from the seam
-    // TODO: check if we really need this
+    // Pending: check if we really need this
     for (auto* vertex : seam.vertices())
     {
       if (vertex->hasTwoIncidentEdges())
